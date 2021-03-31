@@ -6,16 +6,18 @@ import axios from "axios";
 import logo from "../assets/logo.png";
 import { Image } from "react-native";
 import { Redirect } from "react-router";
+import { ScrollView } from "react-native";
 
 const Payment = () => {
 	const [response, setResponse] = useState();
 	const [makePayment, setMakePayment] = useState(false);
 	const [paymentStatus, setPaymentStatus] = useState("");
+	const [payableAmount, setPayableAmount] = useState(0);
 
 	const cartInfo = {
 		id: "$5eruyt35eggr76476236523t3",
 		description: "Pilates on Demand Premium",
-		amount: 5,
+		amount: payableAmount,
 	};
 
 	const onCheckStatus = async (paymentResponse) => {
@@ -50,13 +52,17 @@ const Payment = () => {
 	const paymentUI = () => {
 		if (!makePayment) {
 			return (
-				<View
+				<ScrollView
 					style={{
 						flexDirection: "column",
-						justifyContent: "center",
-						alignItems: "center",
+						// justifyContent: "center",
+						// alignItems: "center",
 						height: 300,
 						marginTop: 50,
+					}}
+					contentContainerStyle={{
+						justifyContent: "center",
+						alignItems: "center",
 					}}
 				>
 					<Image
@@ -67,14 +73,53 @@ const Payment = () => {
 							alignSelf: "center",
 						}}
 					/>
+					<Text style={styles.plansHead}>Plans</Text>
+					<View style={styles.plans}>
+						<TouchableOpacity
+							style={styles.plan}
+							onPress={() => {
+								setPayableAmount(4.99);
+							}}
+						>
+							<Text style={styles.planDuration}>1 Month</Text>
+							<Text style={styles.monthlyCost}>
+								$4.99 per month
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.plan}
+							onPress={() => {
+								setPayableAmount(23.94);
+							}}
+						>
+							<Text style={styles.planDuration}>6 Months</Text>
+							<Text style={styles.planPrice}>$23.94</Text>
+							<Text style={styles.monthlyCost}>
+								$3.99 per month
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.plan}
+							style={styles.plan}
+							onPress={() => {
+								setPayableAmount(35.88);
+							}}
+						>
+							<Text style={styles.planDuration}>1 Year</Text>
+							<Text style={styles.planPrice}>$35.88</Text>
+							<Text style={styles.monthlyCost}>
+								$2.99 per month
+							</Text>
+						</TouchableOpacity>
+					</View>
 					<Text style={{ fontSize: 25, margin: 10 }}>
 						Make Payment
 					</Text>
-					<Text style={{ fontSize: 16, margin: 10 }}>
+					{/* <Text style={{ fontSize: 16, margin: 10 }}>
 						{cartInfo.description}
-					</Text>
+					</Text> */}
 					<Text style={{ fontSize: 16, margin: 10 }}>
-						Payable Amount: ${cartInfo.amount}
+						Payable Amount: ${payableAmount}
 					</Text>
 
 					<TouchableOpacity
@@ -87,14 +132,14 @@ const Payment = () => {
 							alignItems: "center",
 						}}
 						onPress={() => {
-							setMakePayment(true);
+							if (payableAmount !== 0) setMakePayment(true);
 						}}
 					>
 						<Text style={{ fontSize: 20, color: "#FFF" }}>
 							Proceed to Pay
 						</Text>
 					</TouchableOpacity>
-				</View>
+				</ScrollView>
 			);
 		} else {
 			console.log(response);
@@ -122,7 +167,7 @@ const Payment = () => {
 					<PaymentView
 						onCheckStatus={onCheckStatus}
 						product={cartInfo.description}
-						amount={cartInfo.amount}
+						amount={payableAmount}
 					/>
 				);
 			}
@@ -142,14 +187,40 @@ export default Payment;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingTop: 100,
+		// marginTop: 50,
 	},
-	navigation: { flex: 2, backgroundColor: "red" },
+	navigation: { flex: 2 },
 	body: {
 		flex: 10,
 		justifyContent: "center",
 		alignItems: "center",
 		backgroundColor: "yellow",
 	},
-	footer: { flex: 1, backgroundColor: "cyan" },
+	footer: { flex: 1 },
+	plans: {
+		marginTop: 30,
+	},
+	plansHead: {
+		fontSize: 28,
+	},
+	plan: {
+		alignItems: "center",
+		backgroundColor: "#EFA7A1",
+		padding: 10,
+		width: 250,
+		marginBottom: 20,
+		minHeight: 95,
+		borderRadius: 3,
+	},
+	planDuration: {
+		fontSize: 20,
+		marginBottom: 10,
+	},
+	planPrice: {
+		fontSize: 20,
+		color: "#fff",
+	},
+	monthlyCost: {
+		marginTop: 10,
+	},
 });
