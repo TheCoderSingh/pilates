@@ -117,7 +117,8 @@ export default function App() {
 	return (
 		<NativeRouter>
 			<View style={{ flex: 1 }}>
-				<Route exact path="/" component={Home} />
+				{/* <Route exact path="/" component={Home} /> */}
+				<Route exact path="/" component={SignIn} />
 				<Route exact path="/h/:ps" component={Home} />
 				<Route exact path="/pay" component={Payment} />
 				{/* <Route exact path="/" component={Payment} /> */}
