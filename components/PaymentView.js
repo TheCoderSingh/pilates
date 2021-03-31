@@ -65,10 +65,11 @@ const PaymentView = (props) => {
                 align-items: center;
             }
             .products-info{
-                height: 150px;
+                // height: 150px;
                 width: 100%;
                 padding: 20px;
                 text-align: center;
+                margin-top: 50px;
             }
             .card-errors{
                 color: red;
@@ -89,7 +90,9 @@ const PaymentView = (props) => {
         <div class="container-fluid">
             <div class="row">
                 <div class="products-info">
-                    ${product}: $${amount}
+                    ${product}
+                    <br>
+                    $${amount}
                 </div>
             </div>
             <div class="row">

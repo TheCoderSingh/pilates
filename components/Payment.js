@@ -7,8 +7,9 @@ import logo from "../assets/logo.png";
 import { Image } from "react-native";
 import { Redirect } from "react-router";
 import { ScrollView } from "react-native";
+import { Link } from "react-router-native";
 
-const Payment = () => {
+const Payment = (props) => {
 	const [response, setResponse] = useState();
 	const [makePayment, setMakePayment] = useState(false);
 	const [paymentStatus, setPaymentStatus] = useState("");
@@ -16,7 +17,7 @@ const Payment = () => {
 
 	const cartInfo = {
 		id: "$5eruyt35eggr76476236523t3",
-		description: "Pilates on Demand Premium",
+		description: "Pilates on Demand Subscription",
 		amount: payableAmount,
 	};
 
@@ -142,7 +143,6 @@ const Payment = () => {
 				</ScrollView>
 			);
 		} else {
-			console.log(response);
 			if (response !== undefined) {
 				return (
 					<View
@@ -154,12 +154,23 @@ const Payment = () => {
 							marginTop: 50,
 						}}
 					>
-						<Text style={{ fontSize: 25, margin: 10 }}>
+						<Text
+							style={{
+								fontSize: 32,
+								margin: 10,
+								color: "#EFA7A1",
+							}}
+						>
 							{paymentStatus}
 						</Text>
-						<Text style={{ fontSize: 16, margin: 10 }}>
+						{/* <Text style={{ fontSize: 16, margin: 10 }}>
 							{response}
-						</Text>
+						</Text> */}
+						<Link to="/h/1">
+							<Text style={{ fontSize: 18, marginTop: 10 }}>
+								Go to Home
+							</Text>
+						</Link>
 					</View>
 				);
 			} else {
