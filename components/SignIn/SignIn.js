@@ -9,14 +9,13 @@ import {
 	TextInput,
 	TouchableOpacity,
 	View,
-	ActivityIndicator
+	ActivityIndicator,
 } from "react-native";
 import { Link, Redirect } from "react-router-native";
 import logo from "../../assets/logo.png";
 import Footer from "../Footer/Footer";
 import axios from "axios";
 import { conf } from "../../config/config";
-
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -55,7 +54,7 @@ const SignIn = () => {
 		setIsLoading(true);
 		axios({
 			method: "post",
-			url: conf.backendUrl+"/validate_user",
+			url: conf.backendUrl + "/validate_user",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization:
@@ -138,24 +137,21 @@ const SignIn = () => {
 
 				{isLoading ? (
 					<View>
-					<ActivityIndicator size="large" color="#EFA7A1" />
-					<Text style={{ marginTop: 20 }}>
-						
-					</Text>
-				</View>
-				) : ( null)}
+						<ActivityIndicator size="large" color="#EFA7A1" />
+						<Text style={{ marginTop: 20 }}></Text>
+					</View>
+				) : null}
 
 				<TouchableOpacity style={styles.btn} onPress={login}>
 					<Text style={styles.btnTxt}>Sign In</Text>
 				</TouchableOpacity>
-
 
 				<Text style={styles.memberTxt}>Not a member yet?</Text>
 				<Link to="/register" style={styles.btn}>
 					<Text style={styles.btnTxt}>Register</Text>
 				</Link>
 			</ScrollView>
-			<Footer />
+			{/* <Footer /> */}
 		</View>
 	);
 };
