@@ -107,51 +107,52 @@ const Search = () => {
 								</View>
 							) : (
 								videos.map((video) => {
-									return (
-										<Link
-											to={
-												"video/" +
-												video.uri.substring(8)
-											}
-											key={video.uri.substring(8)}
-											underlayColor="none"
-										>
-											<View
+									if (video.privacy.view !== "nobody")
+										return (
+											<Link
+												to={
+													"video/" +
+													video.uri.substring(8)
+												}
 												key={video.uri.substring(8)}
-												style={styles.video}
+												underlayColor="none"
 											>
-												<Image
-													source={{
-														uri: video.pictures.sizes[4].link.slice(
-															0,
-															-6
-														),
-													}}
-													style={styles.thumbnail}
-												/>
-
-												<Text
-													style={{
-														fontSize: 18,
-													}}
+												<View
+													key={video.uri.substring(8)}
+													style={styles.video}
 												>
-													{video.name}
-												</Text>
-												<Text>
-													Duration: {video.duration}{" "}
-													sec
-												</Text>
+													<Image
+														source={{
+															uri: video.pictures.sizes[4].link.slice(
+																0,
+																-6
+															),
+														}}
+														style={styles.thumbnail}
+													/>
 
-												<Text
-													style={{
-														marginTop: 10,
-													}}
-												>
-													{video.description}
-												</Text>
-											</View>
-										</Link>
-									);
+													<Text
+														style={{
+															fontSize: 18,
+														}}
+													>
+														{video.name}
+													</Text>
+													<Text>
+														Duration:{" "}
+														{video.duration} sec
+													</Text>
+
+													<Text
+														style={{
+															marginTop: 10,
+														}}
+													>
+														{video.description}
+													</Text>
+												</View>
+											</Link>
+										);
 								})
 							)}
 						</ScrollView>
