@@ -30,7 +30,7 @@ const Classes = () => {
 	useEffect(() => {
 		axios({
 			method: "post",
-			url: conf.backendUrl+"/classes",
+			url: conf.backendUrl + "/classes",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization:
@@ -77,20 +77,33 @@ const Classes = () => {
 						</View>
 					) : (
 						classes.map((cls) => {
-							return (
+							return cls.vimeo_id ? (
 								<Link
-									key={ cls.class_id}
+									key={cls.class_id}
 									to={"/class/" + cls.class_id}
 									underlayColor="#efefef"
 									style={{
 										marginBottom: 30,
 										width: 350,
 										padding: 10,
-										borderBottomWidth: 1,
+										// borderBottomWidth: 1,
 									}}
 								>
 									<View>
-										<Text style={{ fontSize: 18 }}>
+										<Image
+											source={{ uri: cls.image }}
+											style={{
+												width: deviceWidth - 60,
+												height: 200,
+												resizeMode: "contain",
+											}}
+										/>
+										<Text
+											style={{
+												fontSize: 18,
+												marginTop: 8,
+											}}
+										>
 											{cls.title}
 										</Text>
 										<View
@@ -108,7 +121,7 @@ const Classes = () => {
 										<Text>{cls.excerpt}</Text>
 									</View>
 								</Link>
-							);
+							) : null;
 						})
 					)}
 
