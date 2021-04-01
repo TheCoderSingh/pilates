@@ -129,7 +129,7 @@ const Home = (props) => {
 	return (
 		<View style={{ flex: 1 }}>
 			<ScrollView style={styles.contentCont}>
-				{loggedin ? (
+				{/* {loggedin ? (
 					<TouchableOpacity
 						onPress={() => {
 							try {
@@ -147,7 +147,7 @@ const Home = (props) => {
 					>
 						<Text>Logout</Text>
 					</TouchableOpacity>
-				) : null}
+				) : null} */}
 				<Image source={logo} style={styles.logo} />
 				<View
 					style={{

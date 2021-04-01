@@ -16,11 +16,13 @@ import day3 from "../../assets/30day.png";
 import axios from "axios";
 import { conf } from "../../config/config";
 import { Link } from "react-router-native";
+import { ActivityIndicator } from "react-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
 const Challenges = () => {
 	const [challenges, setChallenges] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		axios({
@@ -34,6 +36,9 @@ const Challenges = () => {
 		})
 			.then((response) => {
 				setChallenges(response.data);
+			})
+			.then(() => {
+				setIsLoading(false);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -103,30 +108,39 @@ const Challenges = () => {
 						</View>
 					</View>
 				</View> */}
-				{challenges.map((challenge) => {
-					if (challenge.classes.length !== 0) {
-						return (
-							<Link
-								to={"/challenge/" + challenge.challenge_id}
-								key={challenge.challenge_id}
-							>
-								<View>
-									<Image
-										source={{ uri: challenge.image }}
-										style={{
-											width: deviceWidth - 70,
-											height: 300,
-											resizeMode: "contain",
-										}}
-									/>
-									<Text style={{ textAlign: "center" }}>
-										{challenge.title}
-									</Text>
-								</View>
-							</Link>
-						);
-					}
-				})}
+				{isLoading ? (
+					<View style={{ marginTop: 50 }}>
+						<ActivityIndicator size="large" color="#EFA7A1" />
+						<Text style={{ marginTop: 20 }}>
+							Loading Challenges...
+						</Text>
+					</View>
+				) : (
+					challenges.map((challenge) => {
+						if (challenge.classes.length !== 0) {
+							return (
+								<Link
+									to={"/challenge/" + challenge.challenge_id}
+									key={challenge.challenge_id}
+								>
+									<View>
+										<Image
+											source={{ uri: challenge.image }}
+											style={{
+												width: deviceWidth - 70,
+												height: 300,
+												resizeMode: "contain",
+											}}
+										/>
+										<Text style={{ textAlign: "center" }}>
+											{challenge.title}
+										</Text>
+									</View>
+								</Link>
+							);
+						}
+					})
+				)}
 			</ScrollView>
 			<Footer />
 		</View>

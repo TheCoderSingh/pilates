@@ -8,14 +8,14 @@ import {
 	TouchableOpacity,
 	View,
 	AsyncStorage,
-	ActivityIndicator
+	ActivityIndicator,
 } from "react-native";
 import Footer from "../Footer/Footer";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-native";
 import axios from "axios";
 import { conf } from "../../config/config";
-import { ListItem, Avatar } from 'react-native-elements'
+import { ListItem, Avatar } from "react-native-elements";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -27,20 +27,21 @@ const Settings = () => {
 	// const [userdata, setUserData] = useState(false);
 
 	useEffect(() => {
-		let loggedInId="";
+		let loggedInId = "";
 		async function retrieveData() {
 			const uid = await AsyncStorage.getItem("@userid");
-			loggedInId=uid;
-			console.log("ud",uid)
-			console.log("log id",loggedInId);
-			if (loggedInId!="" && loggedInId!=null) {
-				const id=loggedInId!=""?loggedInId:props.match.params.loggedin;
-				console.log("login in",id);
+			loggedInId = uid;
+			console.log("ud", uid);
+			console.log("log id", loggedInId);
+			if (loggedInId != "" && loggedInId != null) {
+				const id =
+					loggedInId != "" ? loggedInId : props.match.params.loggedin;
+				console.log("login in", id);
 				setLoggedin(true);
 				setIsLoading(true);
 				axios({
 					method: "post",
-					url: conf.backendUrl+"/user",
+					url: conf.backendUrl + "/user",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization:
@@ -78,61 +79,84 @@ const Settings = () => {
 		}
 	};
 
+	const storeLoggedIn = async () => {
+		try {
+			await AsyncStorage.setItem("@loggedin", "no");
+			await AsyncStorage.removeItem("@userid");
+			setLoggedin(false);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	return (
 		<View style={{ flex: 1 }}>
 			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
 				<Image source={logo} style={styles.logo} />
-				<View
-					style={{
-						height: 120,
-						width: 120,
-						backgroundColor: "#EFA7A1",
-						borderRadius: 100,
-					}}
-				></View>
 				{isLoading ? (
 					<View>
 						<ActivityIndicator size="large" color="#EFA7A1" />
-						</View>
-					) : ( null)}
+					</View>
+				) : null}
 				{loggedin ? (
 					<>
-					<View style={styles.content}>
-					<View style={styles.setting}>
-						<Text style={styles.settingText}>
-							Name
-						</Text>
-						<Text >{user.first_name} {user.last_name}</Text>
-					</View>
-					<View style={styles.settingRes}>
-						<Text style={styles.settingText}>Username</Text>
-						<Text>{user.username}</Text>
-					</View>
-				</View>	
-				<View style={styles.content}>
-					<View style={styles.setting}>
-						<Text style={styles.settingText}>
-							Email
-						</Text>
-						<Text >{user.email}</Text>
-					</View>
-					<View style={styles.settingRes}>
-						<Text style={styles.settingText}>Registered On</Text>
-						<Text>{user.registered}</Text>
-					</View>
-				</View>
-				<View style={styles.content}>
-					<View style={styles.setting}>
-						<Text style={styles.settingText}>
-							Address
-						</Text>
-						<Text >{useraddress.one} {useraddress.city}, {useraddress.state}</Text>
-						<Text >{useraddress.country}, {useraddress.zip} </Text>
-					</View>
-				</View>
-				</>
-
-				): (
+						<View style={styles.content}>
+							<View style={styles.setting}>
+								<Text style={styles.settingText}>Name</Text>
+								<Text>
+									{user.first_name} {user.last_name}
+								</Text>
+							</View>
+							<View style={styles.settingRes}>
+								<Text style={styles.settingText}>Username</Text>
+								<Text>{user.username}</Text>
+							</View>
+						</View>
+						<View style={styles.content}>
+							<View style={styles.setting}>
+								<Text style={styles.settingText}>Email</Text>
+								<Text>{user.email}</Text>
+							</View>
+							<View style={styles.settingRes}>
+								<Text style={styles.settingText}>
+									Registered On
+								</Text>
+								<Text>{user.registered}</Text>
+							</View>
+						</View>
+						<View style={styles.content}>
+							<View style={styles.setting}>
+								<Text style={styles.settingText}>Address</Text>
+								<Text>
+									{useraddress.one} {useraddress.city},{" "}
+									{useraddress.state}
+								</Text>
+								<Text>
+									{useraddress.country}, {useraddress.zip}{" "}
+								</Text>
+							</View>
+						</View>
+						<TouchableOpacity
+							style={{
+								backgroundColor: "#EFA7A1",
+								width: 100,
+								height: 50,
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+							onPress={() => {
+								try {
+									storeLoggedIn();
+									return true;
+								} catch (error) {
+									return false;
+								}
+							}}
+						>
+							<Text>Logout</Text>
+						</TouchableOpacity>
+					</>
+				) : (
 					<View style={styles.buttons}>
 						<Link to="/sign-in" style={styles.button}>
 							<Text style={styles.buttonText}>Sign In</Text>
@@ -141,7 +165,7 @@ const Settings = () => {
 							<Text style={styles.buttonText}>Register</Text>
 						</Link>
 					</View>
-				) }
+				)}
 				{/* <View style={styles.content}>
 					<View style={styles.setting}>
 						<Text style={styles.settingText}>

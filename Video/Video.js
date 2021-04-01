@@ -3,7 +3,7 @@ import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import axios from "axios";
 import { WebView } from "react-native-webview";
 import Footer from "../components/Footer/Footer";
-import {conf} from "../config/config";
+import { conf } from "../config/config";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -12,11 +12,10 @@ const Video = (props) => {
 
 	useEffect(() => {
 		let videoid = props.match.params.id;
-		console.log(videoid);
+
 		axios
-			.get(conf.apiUrl+'/video/'+videoid)
+			.get(conf.apiUrl + "/video/" + videoid)
 			.then((response) => {
-				console.log(response);
 				setVideo(response.data);
 			})
 			.catch((error) => {
