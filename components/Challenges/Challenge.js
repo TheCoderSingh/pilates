@@ -64,6 +64,7 @@ const Challenge = (props) => {
 											<Link
 												to={"/video/" + video.video_id}
 												style={{ marginBottom: 20 }}
+												key={video.video_id}
 											>
 												<View>
 													<Text
@@ -118,6 +119,7 @@ const Challenge = (props) => {
 													video.class.vimeo_id
 												}
 												style={{ marginBottom: 20 }}
+												key={video.class.vimeo_id}
 											>
 												<View>
 													<Text
