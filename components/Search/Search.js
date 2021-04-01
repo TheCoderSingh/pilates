@@ -30,10 +30,9 @@ const Search = () => {
 		setClicked(true);
 
 		axios
-			.get(conf.apiUrl+"/search-videos/"+searchQuery)
+			.get(conf.apiUrl + "/search-videos/" + searchQuery)
 			.then((response) => {
 				setVideos(response.data);
-				console.log(response.data);
 			})
 			.then(() => {
 				setIsLoading(false);
@@ -138,6 +137,11 @@ const Search = () => {
 												>
 													{video.name}
 												</Text>
+												<Text>
+													Duration: {video.duration}{" "}
+													sec
+												</Text>
+
 												<Text
 													style={{
 														marginTop: 10,
@@ -204,9 +208,11 @@ const styles = StyleSheet.create({
 	},
 	video: {
 		marginBottom: 30,
-		borderWidth: 2,
-		borderColor: "#EFA7A1",
+		// borderWidth: 2,
+		// borderColor: "#EFA7A1",
 		padding: 5,
+		height: 250,
+		overflow: "hidden",
 	},
 	videoText: {
 		color: "#fff",
