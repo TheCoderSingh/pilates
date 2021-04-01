@@ -161,7 +161,7 @@ const Home = (props) => {
 						<View>
 							<Text style={{ fontSize: 22 }}>Welcome </Text>
 							<Text style={{ fontSize: 22, color: "#EFA7A1" }}>
-								{user.username}
+								{user.first_name}
 							</Text>
 						</View>
 					) : null}
