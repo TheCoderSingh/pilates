@@ -14,6 +14,7 @@ import Class from "./components/Classes/Class";
 import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import Payment from "./components/Payment";
+import Challenge from "./components/Challenges/Challenge";
 // import Payment from "./components/Payment";
 
 Notifications.setNotificationHandler({
@@ -132,6 +133,7 @@ export default function App() {
 				<Route path="/register" component={Register} />
 				<Route path="/category/:cat" component={CategoryResult} />
 				<Route path="/class/:id" component={Class} />
+				<Route path="/challenge/:id" component={Challenge} />
 			</View>
 		</NativeRouter>
 	);
