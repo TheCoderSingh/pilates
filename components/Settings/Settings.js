@@ -31,12 +31,11 @@ const Settings = () => {
 		async function retrieveData() {
 			const uid = await AsyncStorage.getItem("@userid");
 			loggedInId = uid;
-			console.log("ud", uid);
-			console.log("log id", loggedInId);
+
 			if (loggedInId != "" && loggedInId != null) {
 				const id =
 					loggedInId != "" ? loggedInId : props.match.params.loggedin;
-				console.log("login in", id);
+
 				setLoggedin(true);
 				setIsLoading(true);
 				axios({
@@ -91,7 +90,9 @@ const Settings = () => {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
+			<ScrollView
+				contentContainerStyle={{ alignItems: "center", height: "100%" }}
+			>
 				<Image source={logo} style={styles.logo} />
 				{isLoading ? (
 					<View>
@@ -139,10 +140,12 @@ const Settings = () => {
 						<TouchableOpacity
 							style={{
 								backgroundColor: "#EFA7A1",
-								width: 100,
+								width: deviceWidth,
 								height: 50,
 								alignItems: "center",
 								justifyContent: "center",
+								position: "absolute",
+								bottom: 10,
 							}}
 							onPress={() => {
 								try {
@@ -194,19 +197,20 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 	buttons: {
-		flexDirection: "row",
+		// flexDirection: "row",
 	},
 	button: {
 		marginTop: 30,
 		padding: 15,
-		borderWidth: 1,
-		borderColor: "#EFA7A1",
-		width: 120,
+		// borderWidth: 1,
+		// borderColor: "#EFA7A1",
+		backgroundColor: "#EFA7A1",
+		width: deviceWidth - 80,
 		alignItems: "center",
 		marginHorizontal: 10,
 	},
 	buttonText: {
-		color: "#EFA7A1",
+		color: "#FFF",
 	},
 	content: {
 		marginTop: 30,
