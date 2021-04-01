@@ -15,33 +15,30 @@ import day2 from "../../assets/15day2.png";
 import day3 from "../../assets/30day.png";
 import axios from "axios";
 import { conf } from "../../config/config";
+import { Link } from "react-router-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
 const Challenges = () => {
-	// const [challenges, setChallenges] = useState([]);
+	const [challenges, setChallenges] = useState([]);
 
-	// useEffect(() => {
-	// 	axios({
-	// 		method: "get",
-	// 		url: conf.apiUrl + "/video" + "/507780761",
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 			Authorization:
-	// 				"8P~8HtbJ[azS5tUQc.j@^)c|f>]XzUf6=3?JYYq!5`)Hc33_",
-	// 		},
-	// 		// data: {
-	// 		// 	challenge_id: 507780761,
-	// 		// },
-	// 	})
-	// 		.then((response) => {
-	// 			console.log(response.data);
-	// 			// setChallenges(response.data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log(error);
-	// 		});
-	// }, []);
+	useEffect(() => {
+		axios({
+			method: "post",
+			url: conf.backendUrl + "/challenges",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization:
+					"8P~8HtbJ[azS5tUQc.j@^)c|f>]XzUf6=3?JYYq!5`)Hc33_",
+			},
+		})
+			.then((response) => {
+				setChallenges(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -106,6 +103,30 @@ const Challenges = () => {
 						</View>
 					</View>
 				</View> */}
+				{challenges.map((challenge) => {
+					if (challenge.classes.length !== 0) {
+						return (
+							<Link
+								to={"/challenge/" + challenge.challenge_id}
+								key={challenge.challenge_id}
+							>
+								<View>
+									<Image
+										source={{ uri: challenge.image }}
+										style={{
+											width: deviceWidth - 70,
+											height: 300,
+											resizeMode: "contain",
+										}}
+									/>
+									<Text style={{ textAlign: "center" }}>
+										{challenge.title}
+									</Text>
+								</View>
+							</Link>
+						);
+					}
+				})}
 			</ScrollView>
 			<Footer />
 		</View>
