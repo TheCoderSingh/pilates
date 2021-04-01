@@ -158,7 +158,7 @@ const Home = (props) => {
 					}}
 				>
 					{loggedin ? (
-						<View>
+						<View style={{ flexDirection: "row" }}>
 							<Text style={{ fontSize: 22 }}>Welcome </Text>
 							<Text style={{ fontSize: 22, color: "#EFA7A1" }}>
 								{user.first_name}
