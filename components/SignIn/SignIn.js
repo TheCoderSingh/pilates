@@ -66,7 +66,6 @@ const SignIn = () => {
 			},
 		})
 			.then((response) => {
-				console.log(response);
 				setUserId(response.data.id);
 				setLoggedIn(true);
 				storeLoggedIn();

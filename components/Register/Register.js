@@ -136,7 +136,7 @@ const Register = () => {
 
 	return loggedIn ? (
 		// <Redirect to={"/home/1/" + userId} />
-		<Redirect to={"/pay" + userId} />
+		<Redirect to={"/pay/" + userId} />
 	) : (
 		<View style={{ flex: 1 }}>
 			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
