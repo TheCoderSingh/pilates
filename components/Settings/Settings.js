@@ -7,7 +7,6 @@ import {
 	Text,
 	TouchableOpacity,
 	View,
-	AsyncStorage,
 	ActivityIndicator,
 } from "react-native";
 import Footer from "../Footer/Footer";
@@ -16,6 +15,9 @@ import { Link } from "react-router-native";
 import axios from "axios";
 import { conf } from "../../config/config";
 import { ListItem, Avatar } from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Button } from "react-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -25,6 +27,10 @@ const Settings = () => {
 	const [loggedin, setLoggedin] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	// const [userdata, setUserData] = useState(false);
+	const [time, setTime] = useState(new Date());
+	const [show, setShow] = useState(false);
+
+	const [savedTime, setSaved] = useState();
 
 	useEffect(() => {
 		let loggedInId = "";
@@ -51,7 +57,10 @@ const Settings = () => {
 					},
 				})
 					.then((response) => {
-						// console.log(response.data)
+						let x = getSavedTime();
+						x.then((res) => {
+							setSaved(res.toString().substring(3, 8));
+						});
 						setUser(response.data);
 						setAddress(response.data.address);
 						setIsLoading(false);
@@ -83,6 +92,36 @@ const Settings = () => {
 			await AsyncStorage.setItem("@loggedin", "no");
 			await AsyncStorage.removeItem("@userid");
 			setLoggedin(false);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const onChangeTime = (event, selectedTime) => {
+		const currentTime = selectedTime || time;
+		setShow(Platform.OS === "ios");
+		setTime(currentTime);
+		setSavedTime(currentTime.toString().substring(16, 21));
+	};
+
+	const setSavedTime = async (currentTime) => {
+		try {
+			await AsyncStorage.setItem(
+				"@savedtime",
+				JSON.stringify(currentTime)
+			);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const getSavedTime = async () => {
+		try {
+			let sTime = await AsyncStorage.getItem("@savedtime");
+			sTime = JSON.stringify(sTime);
+			console.log(sTime);
+
+			return sTime;
 		} catch (error) {
 			console.log(error);
 		}
@@ -136,6 +175,34 @@ const Settings = () => {
 									{useraddress.country}, {useraddress.zip}{" "}
 								</Text>
 							</View>
+						</View>
+						<View style={{ marginTop: 70 }}>
+							<Text style={{ fontSize: 20 }}>
+								Get reminders at:{" "}
+								{savedTime ? (
+									savedTime
+								) : (
+									<Text style={{ color: "#888" }}>
+										No time selected
+									</Text>
+								)}
+							</Text>
+							<Button
+								onPress={() => {
+									setShow(true);
+								}}
+								title="Select Time"
+							/>
+							{show && (
+								<DateTimePicker
+									testID="dateTimePicker"
+									value={time}
+									mode="time"
+									is24Hour={true}
+									display="inline"
+									onChange={onChangeTime}
+								/>
+							)}
 						</View>
 						<TouchableOpacity
 							style={{
