@@ -85,7 +85,7 @@ const Classes = () => {
 									style={{
 										marginBottom: 30,
 										width: 350,
-										padding: 10,
+										// padding: 10,
 										// borderBottomWidth: 1,
 									}}
 								>
