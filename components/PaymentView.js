@@ -28,13 +28,15 @@ const PaymentView = (props) => {
             flex-direction: column;
             height: 200px;
             justify-content: space-around;
-            background-color: #EFA7A1;
+            // background-color: #EFA7A1;
             // border-radius: 20px;
             padding: 10px;
             padding-top: 20px;
             padding-bottom: 20px;
             margin-top: 50px;
             margin-bottom: 50px;
+            border-width: 2px;
+            border-color: #EFA7A1;
         }
         .card-element{
             height: 100px;
