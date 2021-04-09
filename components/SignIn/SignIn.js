@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 	input: {
-		width: deviceWidth - 50,
+		width: deviceWidth,
 		borderWidth: 1,
 		marginVertical: 10,
 		borderColor: "#EFA7A1",

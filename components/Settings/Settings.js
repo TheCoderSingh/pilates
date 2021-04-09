@@ -229,7 +229,7 @@ const Settings = () => {
 								}
 							}}
 						>
-							<Text>Logout</Text>
+							<Text style={{ color: "#FFF" }}>Logout</Text>
 						</TouchableOpacity>
 					</>
 				) : (
