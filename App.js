@@ -15,6 +15,7 @@ import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import Payment from "./components/Payment";
 import Challenge from "./components/Challenges/Challenge";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import Payment from "./components/Payment";
 
 Notifications.setNotificationHandler({
@@ -28,8 +29,11 @@ Notifications.setNotificationHandler({
 export default function App() {
 	const [expoPushToken, setExpoPushToken] = useState("");
 	const [notification, setNotification] = useState(false);
+	const [notificationSent, setNotifationSent] = useState(false);
 	const notificationListener = useRef();
 	const responseListener = useRef();
+
+	let time;
 
 	useEffect(() => {
 		registerForPushNotificationsAsync().then((token) =>
@@ -48,7 +52,27 @@ export default function App() {
 			}
 		);
 
-		sendPushNotification(expoPushToken);
+		let x = getSavedTime();
+
+		x.then((res) => {
+			time = res.toString().substring(3, 8);
+		});
+
+		let myInterval = setInterval(() => {
+			let y = new Date().toTimeString().substring(0, 5);
+			if (
+				time === new Date().toTimeString().substring(0, 5) &&
+				!notificationSent
+			) {
+				sendPushNotification(expoPushToken);
+				setNotifationSent(true);
+				clearInterval(myInterval);
+			}
+
+			if (y === "12:00") {
+				setNotifationSent(false);
+			}
+		}, 1000);
 
 		return () => {
 			Notifications.removeNotificationSubscription(
@@ -59,6 +83,18 @@ export default function App() {
 			);
 		};
 	}, []);
+
+	const getSavedTime = async () => {
+		try {
+			let sTime = await AsyncStorage.getItem("@savedtime");
+			sTime = JSON.stringify(sTime);
+			console.log(sTime);
+
+			return sTime;
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	async function sendPushNotification(expoPushToken) {
 		const message = {
