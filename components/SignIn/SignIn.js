@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 	input: {
-		width: deviceWidth,
+		width: deviceWidth - 50,
 		borderWidth: 1,
 		marginVertical: 10,
 		borderColor: "#EFA7A1",
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
 	},
 	btn: {
 		backgroundColor: "#EFA7A1",
-		width: 100,
+		width: deviceWidth,
 		height: 40,
 		alignItems: "center",
 		justifyContent: "center",
