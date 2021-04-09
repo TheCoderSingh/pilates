@@ -33,9 +33,21 @@ export default function App() {
 	const notificationListener = useRef();
 	const responseListener = useRef();
 
+	const storeLoggedIn = async () => {
+		try {
+			await AsyncStorage.setItem("@loggedin", "no");
+			await AsyncStorage.removeItem("@userid");
+			setLoggedin(false);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	let time;
 
 	useEffect(() => {
+		storeLoggedIn();
+
 		registerForPushNotificationsAsync().then((token) =>
 			setExpoPushToken(token)
 		);

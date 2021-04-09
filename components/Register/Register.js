@@ -30,11 +30,14 @@ const Register = () => {
 	const [country, setCountry] = useState();
 	const [zip, setZip] = useState();
 	const [password, setPassword] = useState();
+	const [confpassword, setConfpassword] = useState();
 	const [username, setUsername] = useState();
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [userId, setUserId] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	const [state, setState] = useState({});
+	const [error, setError] = useState(false);
+	const [errorText, setErrorText] = useState();
 
 	useEffect(() => {
 		// let isCancelled = false;
@@ -58,42 +61,133 @@ const Register = () => {
 	}, []);
 
 	const register = () => {
-		setIsLoading(true);
-		axios({
-			method: "post",
-			url: conf.backendUrl + "/register",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization:
-					"8P~8HtbJ[azS5tUQc.j@^)c|f>]XzUf6=3?JYYq!5`)Hc33_",
-			},
-			data: {
-				username: username,
-				password: password,
-				email: email,
-				first_name: firstName,
-				last_name: lastName,
-				addressone: addressone,
-				addresstwo: addresstwo,
-				city: city,
-				state: userState,
-				zip: zip,
-				country: country,
-			},
-		})
-			.then((response) => {
-				console.log(response.data);
-				setUserId(response.data.id);
-				setLoggedIn(true);
-				storeLoggedIn();
-				storeUserId(response.data.id);
-				setIsLoading(false);
-				console.log("newuser id", userId);
+		if (
+			!firstName ||
+			firstName.trim() === "" ||
+			firstName === undefined ||
+			typeof firstName === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid first name.");
+		} else if (
+			!lastName ||
+			lastName.trim() === "" ||
+			lastName === undefined ||
+			typeof lastName === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid last name.");
+		} else if (
+			!addressone ||
+			addressone.trim() === "" ||
+			addressone === undefined ||
+			typeof addressone === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid address.");
+		} else if (
+			!city ||
+			city.trim() === "" ||
+			city === undefined ||
+			typeof city === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid city.");
+		} else if (
+			!userState ||
+			userState.trim() === "" ||
+			userState === undefined ||
+			typeof userState === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid state.");
+		} else if (
+			!country ||
+			country.trim() === "" ||
+			country === undefined ||
+			typeof country === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid country.");
+		} else if (
+			!zip ||
+			zip.trim() === "" ||
+			zip === undefined ||
+			typeof zip === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid zip code.");
+		} else if (
+			!username ||
+			username.trim() === "" ||
+			username === undefined ||
+			typeof username === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid username.");
+		} else if (
+			!email ||
+			email.trim() === "" ||
+			email === undefined ||
+			typeof email === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid email.");
+		} else if (
+			!password ||
+			password.trim() === "" ||
+			password === undefined ||
+			typeof password === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid password.");
+		} else if (
+			!confpassword ||
+			confpassword.trim() === "" ||
+			confpassword === undefined ||
+			typeof confpassword === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid confirm password.");
+		} else if (password !== confpassword) {
+			setError(true);
+			setErrorText("Passwords do not match.");
+		} else {
+			setIsLoading(true);
+			axios({
+				method: "post",
+				url: conf.backendUrl + "/register",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization:
+						"8P~8HtbJ[azS5tUQc.j@^)c|f>]XzUf6=3?JYYq!5`)Hc33_",
+				},
+				data: {
+					username: username,
+					password: password,
+					email: email,
+					first_name: firstName,
+					last_name: lastName,
+					addressone: addressone,
+					addresstwo: addresstwo,
+					city: city,
+					state: userState,
+					zip: zip,
+					country: country,
+				},
 			})
-			.catch((error) => {
-				console.log(error);
-				setIsLoading(false);
-			});
+				.then((response) => {
+					setUserId(response.data.id);
+					setLoggedIn(true);
+					storeLoggedIn();
+					storeUserId(response.data.id);
+					setIsLoading(false);
+				})
+				.catch((error) => {
+					console.log(error);
+					setIsLoading(false);
+				});
+		}
 	};
 
 	const storeLoggedIn = async () => {
@@ -141,6 +235,9 @@ const Register = () => {
 		<View style={{ flex: 1 }}>
 			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
 				<Image source={logo} style={styles.logo} />
+				{error ? (
+					<Text style={{ color: "red" }}>{errorText}</Text>
+				) : null}
 				<TextInput
 					placeholder="First Name"
 					style={styles.input}
@@ -200,15 +297,14 @@ const Register = () => {
 				<TextInput
 					placeholder="Confirm Password"
 					style={styles.input}
+					onChangeText={setConfpassword}
 					secureTextEntry={true}
 				/>
 
 				{isLoading ? (
 					<View>
 						<ActivityIndicator size="large" color="#EFA7A1" />
-						<Text style={{ marginTop: 20 }}>
-							Loading Classes...
-						</Text>
+						<Text style={{ marginTop: 20 }}>Registering...</Text>
 					</View>
 				) : null}
 				<TouchableOpacity style={styles.btn} onPress={register}>
