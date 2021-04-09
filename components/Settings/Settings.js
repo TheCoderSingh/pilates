@@ -143,33 +143,39 @@ const Settings = () => {
 						<View style={styles.content}>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>Name</Text>
-								<Text>
+								<Text style={styles.settingsRes}>
 									{user.first_name} {user.last_name}
 								</Text>
 							</View>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>Username</Text>
-								<Text>{user.username}</Text>
+								<Text style={styles.settingsRes}>
+									{user.username}
+								</Text>
 							</View>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>Email</Text>
-								<Text>{user.email}</Text>
+								<Text style={styles.settingsRes}>
+									{user.email}
+								</Text>
 							</View>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>
 									Registered On
 								</Text>
-								<Text>{user.registered}</Text>
+								<Text style={styles.settingsRes}>
+									{user.registered}
+								</Text>
 							</View>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>Address</Text>
-								<View style={{ flexDirection: "column" }}>
-									<Text>{useraddress.one}</Text>
-									<Text>
-										{useraddress.city}, {useraddress.state}
+								<View>
+									<Text style={styles.settingsRes}>
+										{useraddress.one}, {useraddress.city},{" "}
 									</Text>
-									<Text>
-										{useraddress.country}, {useraddress.zip}{" "}
+									<Text style={styles.settingsRes}>
+										{useraddress.state},{" "}
+										{useraddress.country}, {useraddress.zip}
 									</Text>
 								</View>
 							</View>
@@ -295,5 +301,9 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		marginBottom: 20,
+		fontSize: 16,
+	},
+	settingsRes: {
+		fontSize: 16,
 	},
 });

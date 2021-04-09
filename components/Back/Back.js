@@ -12,7 +12,7 @@ const Back = (props) => {
 					<Text style={styles.backTxt}>{props.text}</Text>
 				</View>
 			) : (
-				<Link to={"/" + props.code}>
+				<Link to={"/" + props.code} underlayColor="none">
 					<View style={styles.backArea}>
 						<Icon name="chevron-back-outline" size={30} />
 						<Text style={styles.backTxt}>{props.text}</Text>
