@@ -122,12 +122,13 @@ const Challenges = () => {
 								<Link
 									to={"/challenge/" + challenge.challenge_id}
 									key={challenge.challenge_id}
+									underlayColor="none"
 								>
-									<View>
+									<View style={{ marginBottom: 30 }}>
 										<Image
 											source={{ uri: challenge.image }}
 											style={{
-												width: deviceWidth - 70,
+												width: deviceWidth - 40,
 												height: 300,
 												resizeMode: "contain",
 											}}
