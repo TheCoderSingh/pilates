@@ -16,7 +16,9 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"requireFullScreen": true
+			"requireFullScreen": true,
+			"bundleIdentifier": "com.pilatesondemand.pilates",
+      		"buildNumber": "1.0.0"
 		},
 		"android": {
 			"adaptiveIcon": {
