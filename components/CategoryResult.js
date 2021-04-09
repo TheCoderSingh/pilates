@@ -12,7 +12,8 @@ import Footer from "./Footer/Footer";
 import Icon from "react-native-vector-icons/Ionicons";
 import axios from "axios";
 import { Link } from "react-router-native";
-import {conf} from "../config/config";
+import { conf } from "../config/config";
+import Back from "./Back/Back";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -22,9 +23,7 @@ const CategoryResult = (props) => {
 
 	useEffect(() => {
 		axios
-			.get(
-				conf.apiUrl+'/search-videos/'+props.match.params.cat
-			)
+			.get(conf.apiUrl + "/search-videos/" + props.match.params.cat)
 			.then((response) => {
 				setVideos(response.data);
 			})
@@ -38,7 +37,7 @@ const CategoryResult = (props) => {
 
 	return (
 		<View style={{ flex: 1 }}>
-			<View style={styles.backArea}>
+			{/* <View style={styles.backArea}>
 				<Link to="/">
 					<View
 						style={{ flexDirection: "row", alignItems: "center" }}
@@ -51,7 +50,8 @@ const CategoryResult = (props) => {
 						<Text style={styles.backTxt}>Home</Text>
 					</View>
 				</Link>
-			</View>
+			</View> */}
+			<Back text="Home" code="" />
 			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
 				<Text style={styles.categoryName}>
 					{props.match.params.cat}

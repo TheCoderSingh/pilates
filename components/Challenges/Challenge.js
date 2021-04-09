@@ -8,6 +8,7 @@ import { Image } from "react-native";
 import { Dimensions } from "react-native";
 import { Link } from "react-router-native";
 import { ActivityIndicator } from "react-native";
+import Back from "../Back/Back";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -41,6 +42,7 @@ const Challenge = (props) => {
 
 	return (
 		<View style={{ flex: 1 }}>
+			<Back text="Challenges" code="challenges" code2="no" />
 			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
 				{isLoading ? (
 					<View style={{ marginTop: 50 }}>

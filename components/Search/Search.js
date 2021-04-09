@@ -17,6 +17,8 @@ import SectionHead from "../SectionHead";
 import { Link } from "react-router-native";
 import MIcon from "react-native-vector-icons/MaterialIcons";
 import { conf } from "../../config/config";
+import Back from "../Back/Back";
+import { TouchableOpacity } from "react-native";
 
 const deviceWidth = Dimensions.get("window").width;
 
@@ -44,6 +46,16 @@ const Search = () => {
 
 	return (
 		<View style={{ flex: 1 }}>
+			{clicked === true ? (
+				<TouchableOpacity
+					onPress={() => {
+						setVideos([]);
+						setClicked(false);
+					}}
+				>
+					<Back text="Search" code="search" code2="yes" />
+				</TouchableOpacity>
+			) : null}
 			<ScrollView
 				contentContainerStyle={{ alignItems: "center" }}
 				style={styles.container}
