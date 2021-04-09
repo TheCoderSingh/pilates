@@ -147,35 +147,35 @@ const Settings = () => {
 									{user.first_name} {user.last_name}
 								</Text>
 							</View>
-							<View style={styles.settingRes}>
+							<View style={styles.setting}>
 								<Text style={styles.settingText}>Username</Text>
 								<Text>{user.username}</Text>
 							</View>
-						</View>
-						<View style={styles.content}>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>Email</Text>
 								<Text>{user.email}</Text>
 							</View>
-							<View style={styles.settingRes}>
+							<View style={styles.setting}>
 								<Text style={styles.settingText}>
 									Registered On
 								</Text>
 								<Text>{user.registered}</Text>
 							</View>
-						</View>
-						<View style={styles.content}>
 							<View style={styles.setting}>
 								<Text style={styles.settingText}>Address</Text>
-								<Text>
-									{useraddress.one} {useraddress.city},{" "}
-									{useraddress.state}
-								</Text>
-								<Text>
-									{useraddress.country}, {useraddress.zip}{" "}
-								</Text>
+								<View style={{ flexDirection: "column" }}>
+									<Text>{useraddress.one}</Text>
+									<Text>
+										{useraddress.city}, {useraddress.state}
+									</Text>
+									<Text>
+										{useraddress.country}, {useraddress.zip}{" "}
+									</Text>
+								</View>
 							</View>
 						</View>
+
+						<View style={styles.content}></View>
 						<View style={{ marginTop: 70 }}>
 							<Text style={{ fontSize: 20 }}>
 								Get reminders at:{" "}
@@ -281,13 +281,19 @@ const styles = StyleSheet.create({
 	},
 	content: {
 		marginTop: 30,
-		width: deviceWidth - 100,
-		flexDirection: "row",
-		justifyContent: "space-between",
+		alignItems: "flex-start",
+		// flexDirection: "row",
+		// justifyContent: "space-between",
 	},
 	settingText: {
 		marginVertical: 5,
 		color: "#EFA7A1",
 		fontSize: 16,
+		marginRight: 10,
+	},
+	setting: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginBottom: 20,
 	},
 });
