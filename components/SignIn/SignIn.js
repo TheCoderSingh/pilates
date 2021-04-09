@@ -25,6 +25,8 @@ const SignIn = () => {
 	const [loggedIn, setLoggedIn] = useState(false);
 	const [userId, setUserId] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState(false);
+	const [errorText, setErrorText] = useState();
 
 	useEffect(() => {
 		let isCancelled = false;
@@ -51,31 +53,49 @@ const SignIn = () => {
 	}, []);
 
 	const login = () => {
-		setIsLoading(true);
-		axios({
-			method: "post",
-			url: conf.backendUrl + "/validate_user",
-			headers: {
-				"Content-Type": "application/json",
-				Authorization:
-					"8P~8HtbJ[azS5tUQc.j@^)c|f>]XzUf6=3?JYYq!5`)Hc33_",
-			},
-			data: {
-				username: username,
-				user_password: password,
-			},
-		})
-			.then((response) => {
-				setUserId(response.data.id);
-				setLoggedIn(true);
-				storeLoggedIn();
-				storeUserId(response.data.id);
-				setIsLoading(false);
+		if (
+			!username ||
+			username.trim() === "" ||
+			username === undefined ||
+			typeof username === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid username.");
+		} else if (
+			!password ||
+			password.trim() === "" ||
+			password === undefined ||
+			typeof password === undefined
+		) {
+			setError(true);
+			setErrorText("Please enter a valid password.");
+		} else {
+			setIsLoading(true);
+			axios({
+				method: "post",
+				url: conf.backendUrl + "/validate_user",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization:
+						"8P~8HtbJ[azS5tUQc.j@^)c|f>]XzUf6=3?JYYq!5`)Hc33_",
+				},
+				data: {
+					username: username,
+					user_password: password,
+				},
 			})
-			.catch((error) => {
-				console.log(error);
-				setIsLoading(false);
-			});
+				.then((response) => {
+					setUserId(response.data.id);
+					setLoggedIn(true);
+					storeLoggedIn();
+					storeUserId(response.data.id);
+					setIsLoading(false);
+				})
+				.catch((error) => {
+					console.log(error);
+					setIsLoading(false);
+				});
+		}
 	};
 
 	const storeLoggedIn = async () => {
@@ -122,6 +142,9 @@ const SignIn = () => {
 		<View style={{ flex: 1 }}>
 			<ScrollView contentContainerStyle={{ alignItems: "center" }}>
 				<Image source={logo} style={styles.logo} />
+				{error ? (
+					<Text style={{ color: "red" }}>{errorText}</Text>
+				) : null}
 				<TextInput
 					placeholder="Username"
 					style={styles.input}
