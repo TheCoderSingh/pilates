@@ -79,24 +79,24 @@ const Payment = (props) => {
 						<TouchableOpacity
 							style={styles.plan}
 							onPress={() => {
-								setPayableAmount(4.99);
+								setPayableAmount(24.99);
 							}}
 						>
 							<Text style={styles.planDuration}>1 Month</Text>
 							<Text style={styles.monthlyCost}>
-								$4.99 per month
+								$24.99 per month
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={styles.plan}
 							onPress={() => {
-								setPayableAmount(23.94);
+								setPayableAmount(119.94);
 							}}
 						>
 							<Text style={styles.planDuration}>6 Months</Text>
-							<Text style={styles.planPrice}>$23.94</Text>
+							<Text style={styles.planPrice}>$119.94</Text>
 							<Text style={styles.monthlyCost}>
-								$3.99 per month
+								$19.99 per month
 							</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
@@ -107,9 +107,9 @@ const Payment = (props) => {
 							}}
 						>
 							<Text style={styles.planDuration}>1 Year</Text>
-							<Text style={styles.planPrice}>$35.88</Text>
+							<Text style={styles.planPrice}>$199.92</Text>
 							<Text style={styles.monthlyCost}>
-								$2.99 per month
+								$16.66 per month
 							</Text>
 						</TouchableOpacity>
 					</View>
