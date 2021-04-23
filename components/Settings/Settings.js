@@ -182,34 +182,6 @@ const Settings = () => {
 						</View>
 
 						<View style={styles.content}></View>
-						<View style={{ marginTop: 70 }}>
-							<Text style={{ fontSize: 20 }}>
-								Get reminders at:{" "}
-								{savedTime ? (
-									savedTime
-								) : (
-									<Text style={{ color: "#888" }}>
-										No time selected
-									</Text>
-								)}
-							</Text>
-							<Button
-								onPress={() => {
-									setShow(true);
-								}}
-								title="Select Time"
-							/>
-							{show && (
-								<DateTimePicker
-									testID="dateTimePicker"
-									value={time}
-									mode="time"
-									is24Hour={true}
-									display="inline"
-									onChange={onChangeTime}
-								/>
-							)}
-						</View>
 						<TouchableOpacity
 							style={{
 								backgroundColor: "#EFA7A1",
